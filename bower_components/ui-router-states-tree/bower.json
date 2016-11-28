@@ -1,0 +1,27 @@
+{
+  "name": "ui-router-states-tree",
+  "main": "ui-router-states-tree.js",
+  "version": "0.0.2",
+  "homepage": "https://github.com/nonmanifold/ui-router-states-tree",
+  "authors": [
+    "Nick Serebrennikov <non.manifold@gmail.com>"
+  ],
+  "description": "AngularJS module for acessing ui-router's states as a tree to be later presented as navbar or menu",
+  "keywords": [
+    "angular",
+	"ui-router",
+    "state",
+    "ui-router",
+    "routing",
+    "navbar"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ]
+}

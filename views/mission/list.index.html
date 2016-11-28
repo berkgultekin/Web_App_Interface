@@ -1,0 +1,51 @@
+<div class="row" ng-init="initList()">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Mission Archive
+                    <small>active & old missions</small>
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <table class="table table-bordered table-hover table-striped table-vertical-aligned">
+                    <thead>
+                    <tr>
+                        <th>Mission ID</th>
+                        <th>Mission Name</th>
+                        <th>Location</th>
+                        <th>Dates</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="mission in missionList">
+                        <td>M{{mission.id}}</td>
+                        <td>{{mission.name}}</td>
+                        <td>{{mission.location}}</td>
+                        <td>{{mission.date_start}}<br/>{{mission.date_end}}</td>
+                        <td class="text-center"
+                            ng-class="{success: (mission.status == 0), warning: (mission.status == 1), primary: (mission.status == 2)}">
+                            <span ng-if="(mission.status == 0)">Planning...</span>
+                            <span ng-if="(mission.status == 1)">On DUTY</span>
+                            <span ng-if="(mission.status == 2)">Completed</span>
+                        </td>
+                        <td class="text-center">
+                            <a ng-href="#/mission/plan/{{mission.id}}" class="btn btn-success btn-sm"
+                               ng-if="(mission.status == 0)"><i class="fa fa-fw fa-cogs"></i>Continue to Plan </a>
+                            <a class="btn btn-danger btn-sm"
+                               ng-if="(mission.status == 0)"><i class="fa fa-fw fa-times"></i>Abort the Mission </a>
+                            <a ng-if="(mission.status == 1)">DEVAM EDİYOR</a>
+                            <a class="btn btn-" ng-if="(mission.status == 2)">TAMAMLANDI</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

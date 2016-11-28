@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Add New Person</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit="add()">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" ng-model="newPerson.name" id="name" name="name" required="required"
+                                   class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="surname">Surname <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" ng-model="newPerson.surname" id="surname" name="surname"
+                                   required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="blood_group">Blood Group <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select ng-model="newPerson.blood_group" id="blood_group" name="blood_group" required="required"
+                                   class="form-control col-md-7 col-xs-12">
+                                   <option value="ARh+">ARh+</option>
+                                   <option value="ARh-">ARh-</option>
+                                   <option value="BRh+">BRh+</option>
+                                   <option value="BRh-">BRh-</option>
+                                   <option value="0Rh+">0Rh+</option>
+                                   <option value="0Rh-">0Rh-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="reset" class="btn btn-primary">Cancel</button>
+                            <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> Add Person
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

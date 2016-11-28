@@ -1,0 +1,33 @@
+<div class="row" ng-init="initList()">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Device Records</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <table class="table table-bordered table-hover table-striped table-vertical-aligned">
+                    <thead>
+                    <tr>
+                        <th>Person ID</th>
+                        <th>Name</th>
+                        <th>Device Type</th>
+                        <th>Details</th>
+                        <th>Operations</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="device in deviceList">
+                        <td>D{{device.id}}</td>
+                        <td>{{device.name}}</td>
+                        <td>{{device.type}}</td>
+                        <td class="glyphicon glyphicon-edit"></td>
+                        <td class="glyphicon glyphicon-remove"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

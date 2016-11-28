@@ -1,0 +1,158 @@
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Add New Device</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br/>
+                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit="add()">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="type">Device Type <span class="required">*</span>
+                        </label>
+                        <div  class="col-md-6 col-sm-6 col-xs-12">
+                            <select ng-model="newDevice.type" ng-change="initObject(newDevice.type)" id="type" name="type" required="required"
+                                   class="form-control col-md-7 col-xs-12">
+                                   <option value="Phone">Phone</option>
+                                   <option value="Tablet">Tablet</option>
+                                   <option value="Smart Glass">Smart Glass</option>
+                                   <option value="Multicopter">Multicopter</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div ng-if=" newDevice.type == 'Phone' ">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.name" id="name" name="name" required="required"
+                                       class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Model <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.model" id="model" name="model"
+                                       required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Mac <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.mac" id="mac" name="mac"
+                                       required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Telephone Number <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.number" id="number" name="number"
+                                       required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if=" newDevice.type == 'Tablet' ">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.name" id="name" name="name" required="required"
+                                       class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Model <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.model" id="model" name="model"
+                                       required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Mac <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.mac" id="mac" name="mac"
+                                       required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if=" newDevice.type == 'Multicopter' ">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.name" id="name" name="name" required="required"
+                                       class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Model <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.model" id="model" name="model"
+                                       required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Rotor Count <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.rotorCount" id="rotorCount" name="rotorCount"
+                                       required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if=" newDevice.type == 'Smart Glass' ">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.name" id="name" name="name" required="required"
+                                       class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="model">Model <span
+                                    class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" ng-model="newDevice.model" id="model" name="model"
+                                       required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <!--div ng-if="key == 'City' ">
+                        <pre>City or County !!! {{$parent.localityTypeRadio}}</pre>
+                    </div>
+                    <div ng-if="key == 'Town'">
+                        <pre>Town!!! {{$parent.localityTypeRadio}}</pre>
+                    </div--> 
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="reset" class="btn btn-primary">Cancel</button>
+                            <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> Add Person
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
