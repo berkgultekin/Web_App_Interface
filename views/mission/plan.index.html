@@ -1,3 +1,8 @@
+<style>
+.has-cursor{
+    cursor: pointer;
+}
+</style>
 <div class="row" ng-init="initPlan()">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -60,24 +65,29 @@
                 </table>
                 <div style="clear: both;"></div>
 
-                <div class="row">
+                <div class="row" ng-controller="MapController" ng-init="initMap()">
+
                     <div class="col-xs-10">
-                        <openlayers custom-layers="true" ol-center="map.center" ol-default="map.default" height="400px" width="100%">
-                            <ol-layer  ol-layer-properties="map.layers.bing"></ol-layer>
-                            <ol-draw message="This is a path" coords="[[[-58.38,-34.60], [-58.58,-34.60]]]"></ol-draw>
+                        <openlayers ol-center="center" ol-defaults="defaults" height="400">
+                            <ol-layer ol-layer-properties="map.layers.bing"></ol-layer>
+                            <ol-marker ng-repeat="marker in markers" lat="marker.lat" lon="marker.lon" ol-style="marker.style" ></ol-marker>
                         </openlayers>
+                        <div ng-if="drawingActive" style="padding:5px; border: 1px solid #fff; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                            <strong>Drawing Mode is ACTIVE</strong>
+                            <button type="button" class="btn btn-xs btn-success pull-right" ng-click="saveAction()"><i class="fa fa-fw fa-save"></i> Save</button>
+                        </div>
                     </div>
                     <div class="col-xs-2">
                         <section class="panel">
                             <div class="x_title">
-                                <h2  class="green">GIS Controls</h2>
+                                <h2  class="green">GIS Controlss</h2>
                                 <div class="clearfix"></div>
                             </div>
                                 <div class="project_detail">
                                     <p class="title">Points</p>
-                                    <i class="fa fa-fw fa-plus"></i> Add Critical Point<br />
-                                    <i class="fa fa-fw fa-plus"></i> Add Seen Position<br />
-                                    <i class="fa fa-fw fa-plus"></i> Add Meeting Point<br />
+                                    <a ng-click="addPoint(1)" class="has-cursor"><i class="fa fa-fw fa-plus"></i> Add Critical Point<br /></a>
+                                    <a ng-click="addPoint(2)" class="has-cursor"><i class="fa fa-fw fa-plus"></i> Add Seen Position<br /></a>
+                                    <a ng-click="addPoint(3)" class="has-cursor"><i class="fa fa-fw fa-plus"></i> Add Meeting Point<br /></a>
                                     <hr />
                                     <p class="title">Areas</p>
                                     <i class="fa fa-fw fa-plus"></i> Add Search Area<br />
