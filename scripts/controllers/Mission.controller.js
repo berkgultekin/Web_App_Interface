@@ -81,7 +81,7 @@
                 },
                 defaults: {
                     events: {
-                        map: [ 'singleclick', 'pointermove' ]
+                        map: ['singleclick', 'pointermove']
                     }
                 },
                 mouseposition: {},
