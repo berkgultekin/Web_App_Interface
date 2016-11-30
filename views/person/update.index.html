@@ -1,8 +1,8 @@
-<div class="row">
+<div class="row" ng-init="initUpdate()">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Add New Person</h2>
+                <h2>Update Person</h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -30,13 +30,13 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <select ng-model="newPerson.blood_group" id="blood_group" name="blood_group" required="required"
-                                   class="form-control col-md-7 col-xs-12">
-                                   <option value="ARh+">ARh+</option>
-                                   <option value="ARh-">ARh-</option>
-                                   <option value="BRh+">BRh+</option>
-                                   <option value="BRh-">BRh-</option>
-                                   <option value="0Rh+">0Rh+</option>
-                                   <option value="0Rh-">0Rh-</option>
+                                    class="form-control col-md-7 col-xs-12">
+                                <option value="ARh+">ARh+</option>
+                                <option value="ARh-">ARh-</option>
+                                <option value="BRh+">BRh+</option>
+                                <option value="BRh-">BRh-</option>
+                                <option value="0Rh+">0Rh+</option>
+                                <option value="0Rh-">0Rh-</option>
                             </select>
                         </div>
                     </div>
@@ -50,8 +50,7 @@
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button type="reset" class="btn btn-primary">Cancel</button>
-                            <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> Add Person
+                            <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> Update
                             </button>
                         </div>
                     </div>

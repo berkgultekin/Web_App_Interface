@@ -13,7 +13,7 @@ app.factory('PersonService', function (API, $http, $filter, $rootScope) {
             return $http.delete(API.url + 'person/delete/' + person_id);
         },
         updatePerson: function (person, person_id) {
-            return $http.update(API.url + 'person/update/' + person_id);
+            return $http.put(API.url + 'person/update/' + person_id, person);
         }
 	};
 

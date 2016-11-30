@@ -38,7 +38,10 @@
                             <a ng-href="#/mission/plan/{{mission.id}}" class="btn btn-success btn-sm"
                                ng-if="(mission.status == 0)"><i class="fa fa-fw fa-cogs"></i>Continue to Plan </a>
                             <a class="btn btn-danger btn-sm"
-                               ng-if="(mission.status == 0)"><i class="fa fa-fw fa-times"></i>Abort the Mission </a>
+                               ng-if="(mission.status == 0)"><i class="fa fa-fw fa-times"></i>Abort </a>
+                            <a class="btn btn-warning btn-sm" ng-href="#/mission/update/{{mission.id}}"
+                               ng-if="(mission.status == 0)"><i class="fa fa-fw fa-times"></i>Edit </a>
+
                             <a ng-if="(mission.status == 1)">DEVAM EDİYOR</a>
                             <a class="btn btn-" ng-if="(mission.status == 2)">TAMAMLANDI</a>
                         </td>
