@@ -51,6 +51,18 @@
                 missionId: null
             }
         });
+        $stateProvider.state('mission.update', {
+            url: "/update/:missionId",
+            controller: 'MissionController',
+            templateUrl: "views/mission/update.index.html",
+            controllerAs: 'vm',
+            data: {
+                sideMenu: null,
+            },
+            params: {
+                missionId: null
+            }
+        });
 
     }
 
@@ -71,6 +83,13 @@
             MissionService.getMission($stateParams.missionId).then(function (response) {
                 console.log(response);
                 $scope.mission = response.data;
+            });
+
+            $scope.teamMembers = [];
+            $scope.personList = [];
+            PersonService.getPeople().then(function (response) {
+                console.log(response.data);
+                $scope.personList = response.data;
             });
 
             angular.extend($scope, {
@@ -111,6 +130,42 @@
                 }
             });
 
+        }
+
+        /* init update page */
+        $scope.initUpdate = function () {
+            $scope.newMission ={};
+            MissionService.getMission($stateParams.missionId).then(function (response) {
+                console.log(response);
+                $scope.newMission = response.data;
+            });
+        }
+
+        /* update mission */
+        $scope.update = function () {
+            var filtered = {
+                name : $scope.newMission.name,
+                location : $scope.newMission.location,
+                description : $scope.newMission.description,
+                date_start : $scope.newMission.date_start,
+                date_end : $scope.newMission.date_end
+            };
+
+            MissionService.updateMission(filtered, $scope.newMission.id).then(function (response) {
+                console.log(response);
+            });
+
+        }
+
+        /* add person to mission */
+        $scope.additionofTeamMember = function (addedPerson) {
+
+            console.log(addedPerson);
+            //return;
+            $scope.teamMembers.push(addedPerson);
+            MissionService.addPersontoMission($stateParams.missionId, addedPerson.id).then(function (response) {
+                console.log(response);
+            });
         }
 
     }

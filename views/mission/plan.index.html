@@ -33,12 +33,13 @@
                                     <th>Rescue Team:</th>
                                     <td style="text-align: left;">
                                         <ul>
-                                            <li>Abdulkadir Dalga</li>
-                                            <li>Berk Gültekin</li>
-                                            <li>Hasan Ali Duran</li>
-                                            <li>Tuğca Eker</li>
+                                            <li ng-repeat="member in teamMembers">{{member.name}}</li>
                                         </ul>
-                                        <a class="green"><i class="fa fa-fw fa-plus"></i> add member to team</a>
+                                        <a class="green" ng-click="showForm=true" ng-show="!showForm" style="cursor : pointer;"><i class="fa fa-fw fa-plus"></i> add member to team</a>
+                                        <div ng-show="showForm">
+                                            <select ng-model="addedPerson" ng-options="person as person.name for person in personList" class="form-control"></select>
+                                            <button class="btn btn-xs btn-success btn-block" ng-click="additionofTeamMember(addedPerson)"><i class="fa fa-fw fa-plus"></i> Add </button>
+                                        </div>
                                     </td>
                                 </tr>
                                 </tbody>
