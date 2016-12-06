@@ -56,13 +56,15 @@
     }
 
 
-    function PersonController($scope, PersonService, $stateParams) {
+    function PersonController($scope, PersonService, $stateParams, $rootScope) {
 		/* init add page */
         $scope.initList = function () {
             $scope.personList = [];
+            $rootScope.showLoader();
             PersonService.getPeople().then(function (response) {
                 console.log(response.data);
                 $scope.personList = response.data;
+                $rootScope.hideLoader();
             });
         }
 		/* init update page */
@@ -76,9 +78,10 @@
 
 		/* add new person */
         $scope.add = function () {
-
+            $rootScope.showLoader();
             PersonService.addNewPerson($scope.newPerson).then(function (response) {
                 console.log(response);
+                $rootScope.hideLoader();
             });
 
         }

@@ -5077,3 +5077,23 @@ ul.notifications {
 }
 
 /** /Dropzone.js **/
+.loader{
+  position: absolute;
+  width: 100%;
+  z-index: 99999;
+  height: 100%;
+  background-color: #b5ccf1;
+  text-align: center;
+  opacity: 0.75;
+}
+
+.loader-img{
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

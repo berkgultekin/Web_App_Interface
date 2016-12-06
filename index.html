@@ -24,6 +24,8 @@
   <!-- endbuild -->
 </head>
 <body  ng-class="{login: isLogin == 'login'}" class="nav-md">
+<div ng-show="loader == 'shown'" class="loader"><img src="images/ripple.svg" class="loader-img">
+</div>
 <ui-view></ui-view>
 </body>
 
@@ -71,7 +73,9 @@
 <!-- injector:js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/custom.js"></script>
+<script src="scripts/misc/APIInterceptor.js"></script>
 <script src="scripts/directives/OpenLayerDrawingDirective.js"></script>
+<script src="scripts/services/Store.js"></script>
 <script src="scripts/services/MissionService.js"></script>
 <script src="scripts/services/PersonService.js"></script>
 <script src="scripts/services/DeviceService.js"></script>

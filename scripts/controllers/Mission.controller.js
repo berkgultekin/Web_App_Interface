@@ -67,22 +67,25 @@
     }
 
 
-    function MissionController($scope, MissionService, PersonService, GPSService, $state, $stateParams) {
+    function MissionController($scope, MissionService, PersonService, GPSService, $state, $stateParams, $rootScope) {
 
         /* init list page */
         $scope.initList = function () {
+            $rootScope.showLoader();
             $scope.missionList = [];
             MissionService.getMissions().then(function (response) {
-                console.log(response.data);
                 $scope.missionList = response.data;
+                $rootScope.hideLoader();
             });
         }
 
         /* init plan page */
         $scope.initPlan = function () {
+            $rootScope.showLoader();
             MissionService.getMission($stateParams.missionId).then(function (response) {
                 console.log(response);
                 $scope.mission = response.data;
+                $rootScope.hideLoader();
             });
 
             $scope.teamMembers = [];
@@ -123,21 +126,27 @@
 
         /* add new mission */
         $scope.add = function () {
+            $rootScope.showLoader();
 
             MissionService.addNewMission($scope.newMission).then(function (response) {
                 if (angular.isDefined(response.data) && angular.isDefined(response.data.id)) {
                     $state.go('mission.plan', {missionId: response.data.id});
                 }
+                $rootScope.hideLoader();
+
             });
 
         }
 
         /* init update page */
         $scope.initUpdate = function () {
+            $rootScope.showLoader();
             $scope.newMission ={};
             MissionService.getMission($stateParams.missionId).then(function (response) {
                 console.log(response);
                 $scope.newMission = response.data;
+                $rootScope.hideLoader();
+
             });
         }
 
@@ -159,12 +168,14 @@
 
         /* add person to mission */
         $scope.additionofTeamMember = function (addedPerson) {
+            $rootScope.showLoader();
 
             console.log(addedPerson);
             //return;
             $scope.teamMembers.push(addedPerson);
             MissionService.addPersontoMission($stateParams.missionId, addedPerson.id).then(function (response) {
                 console.log(response);
+                $rootScope.hideLoader();
             });
         }
 
