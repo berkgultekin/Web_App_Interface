@@ -6,7 +6,7 @@
 		.controller('DeviceController', DeviceController);
 
 	function stateConfig($stateProvider) {
-		$stateProvider.state('device', {
+		$stateProvider.state('content.device', {
 			url: "/device",
 			controller: 'DeviceController',
 			templateUrl: "views/device/main.index.html",
@@ -18,7 +18,7 @@
 				}
 			}
 		});
-		$stateProvider.state('device.new', {
+		$stateProvider.state('content.device.new', {
 			url: "/new",
 			controller: 'DeviceController',
 			templateUrl: "views/device/new.index.html",
@@ -29,7 +29,7 @@
 				}
 			}
 		});
-		$stateProvider.state('device.list', {
+		$stateProvider.state('content.device.list', {
 			url: "/list",
 			controller: 'DeviceController',
 			templateUrl: "views/device/list.index.html",

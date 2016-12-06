@@ -22,8 +22,8 @@ var app = angular
 
 		$rootScope.sideMenuArray = [];
 		/** SIDEMENU SETUP */
-		angular.forEach(statesArray, function (state, idx) {
-			console.log(state, idx);
+		console.log("States", statesArray);
+		angular.forEach(statesArray[1].children, function (state, idx) {
 			if (state.data && state.data.sideMenu) {
 				var context = state.data.sideMenu;
 
@@ -45,7 +45,9 @@ var app = angular
 
 		console.log($rootScope.sideMenuArray);
 
-		$state.go('init');
+		//$state.go('content.init');
+		$state.go('login');
+		//$state.go('init');
 
 		$rootScope.$state = $state;
 	});

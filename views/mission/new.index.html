@@ -7,7 +7,7 @@
             </div>
             <div class="x_content">
                 <br/>
-                <div id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit="add()">
+                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" ng-submit="add()">
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Mission Name <span
                                 class="required">*</span>
@@ -52,8 +52,15 @@
                                    class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                            <button type="reset" class="btn btn-primary">Cancel</button>
+                            <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-plus"></i> Add Mission
+                            </button>
+                        </div>
+                    </div>
                 </form>
-            </div>
+            </form>
         </div>
     </div>
 </div>

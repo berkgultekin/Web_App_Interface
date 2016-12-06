@@ -6,7 +6,7 @@
         .controller('MissionController', MissionController);
 
     function stateConfig($stateProvider) {
-        $stateProvider.state('mission', {
+        $stateProvider.state('content.mission', {
             url: "/mission",
             controller: 'MissionController',
             templateUrl: "views/mission/main.index.html",
@@ -18,7 +18,7 @@
                 }
             }
         });
-        $stateProvider.state('mission.new', {
+        $stateProvider.state('content.mission.new', {
             url: "/new",
             controller: 'MissionController',
             templateUrl: "views/mission/new.index.html",
@@ -29,7 +29,7 @@
                 }
             }
         });
-        $stateProvider.state('mission.list', {
+        $stateProvider.state('content.mission.list', {
             url: "/list",
             controller: 'MissionController',
             templateUrl: "views/mission/list.index.html",
@@ -40,7 +40,7 @@
                 }
             }
         });
-        $stateProvider.state('mission.plan', {
+        $stateProvider.state('content.mission.plan', {
             url: "/plan/:missionId",
             controller: 'MissionController',
             templateUrl: "views/mission/plan.index.html",
@@ -51,7 +51,7 @@
                 missionId: null
             }
         });
-        $stateProvider.state('mission.update', {
+        $stateProvider.state('content.mission.update', {
             url: "/update/:missionId",
             controller: 'MissionController',
             templateUrl: "views/mission/update.index.html",

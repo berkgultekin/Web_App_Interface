@@ -6,7 +6,7 @@
         .controller('PersonController', PersonController);
 
     function stateConfig($stateProvider) {
-        $stateProvider.state('person', {
+        $stateProvider.state('content.person', {
             url: "/person",
             controller: 'PersonController',
             templateUrl: "views/person/main.index.html",
@@ -18,7 +18,7 @@
                 }
             }
         });
-        $stateProvider.state('person.new', {
+        $stateProvider.state('content.person.new', {
             url: "/new",
             controller: 'PersonController',
             templateUrl: "views/person/new.index.html",
@@ -29,7 +29,7 @@
                 }
             }
         });
-        $stateProvider.state('person.list', {
+        $stateProvider.state('content.person.list', {
             url: "/list",
             controller: 'PersonController',
             templateUrl: "views/person/list.index.html",
@@ -41,7 +41,7 @@
             }
         });
 
-        $stateProvider.state('person.update', {
+        $stateProvider.state('content.person.update', {
             url: "/update/:personId",
             controller: 'PersonController',
             templateUrl: "views/person/update.index.html",

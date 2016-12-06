@@ -6,7 +6,7 @@
 		.controller('AppController', AppController);
 
 	function stateConfig($stateProvider) {
-		$stateProvider.state('dashboard', {
+		$stateProvider.state('content.dashboard', {
 			url: "/dashboard",
 			controller: 'AppController',
 			controllerAs: 'vm',
