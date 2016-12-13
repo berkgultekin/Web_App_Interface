@@ -20,7 +20,7 @@
 		});
 	}
 
-	function AppController() {
+	function AppController(Store, toastr) {
 
 
 	}

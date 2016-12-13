@@ -71,12 +71,19 @@
 
     }
     
-    function ContentController() {
+    function ContentController($scope, $state, Store,toastr ) {
 		var vm = this;
         var init = function ($scope) {
             initMenu();
         }
         init()
+
+        $scope.logout = function(){
+            Store.clear();
+            $state.go('login');
+            toastr.info( 'You logged out successfully.', 'Logged out!');
+
+        }
 
     }
 
