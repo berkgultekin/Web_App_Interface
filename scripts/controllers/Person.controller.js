@@ -56,7 +56,7 @@
     }
 
 
-    function PersonController($scope, PersonService, $stateParams, $rootScope) {
+    function PersonController($scope, PersonService, $stateParams, $rootScope, toastr) {
 		/* init add page */
         $scope.initList = function () {
             $scope.personList = [];
@@ -70,9 +70,13 @@
 		/* init update page */
         $scope.initUpdate = function () {
             $scope.newPerson ={};
+            $rootScope.showLoader();
+
             PersonService.getPerson($stateParams.personId).then(function (response) {
                 console.log(response);
                 $scope.newPerson = response.data;
+                $rootScope.hideLoader();
+
             });
         }
 
@@ -80,7 +84,7 @@
         $scope.add = function () {
             $rootScope.showLoader();
             PersonService.addNewPerson($scope.newPerson).then(function (response) {
-                console.log(response);
+                toastr.success( 'New person record created successfully..', 'Successfully added!');
                 $rootScope.hideLoader();
             });
 
@@ -91,11 +95,12 @@
             var filtered = {
                 name : $scope.newPerson.name,
                 surname : $scope.newPerson.surname,
-                blood_group : $scope.newPerson.blood_group
+                blood_group : $scope.newPerson.blood_group,
+                e_mail: $scope.newPerson.e_mail,
             };
 
             PersonService.updatePerson(filtered, $scope.newPerson.id).then(function (response) {
-                console.log(response);
+                toastr.success( 'New person record created successfully..', 'Successfully added!');
             });
 
         }
