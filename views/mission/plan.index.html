@@ -76,6 +76,10 @@
                         <div ng-if="drawingActive" style="padding:5px; border: 1px solid #fff; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
                             <strong>Drawing Mode is ACTIVE</strong>
                             <button type="button" class="btn btn-xs btn-success pull-right" ng-click="saveAction()"><i class="fa fa-fw fa-save"></i> Save</button>
+                            <button type="button" class="btn btn-xs btn-danger pull-right" ng-click="cancelAction()"><i class="fa fa-fw fa-times"></i> Cancel</button>
+                        </div>
+                        <div>
+                            {{markers}}
                         </div>
                     </div>
                     <div class="col-xs-2">

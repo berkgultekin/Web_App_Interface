@@ -29,10 +29,11 @@
                         <td>{{mission.location}}</td>
                         <td>{{mission.date_start}}<br/>{{mission.date_end}}</td>
                         <td class="text-center"
-                            ng-class="{success: (mission.status == 0), warning: (mission.status == 1), primary: (mission.status == 2)}">
+                            ng-class="{success: (mission.status == 0), warning: (mission.status == 1), primary: (mission.status == 2), danger: (mission.status == 3)}">
                             <span ng-if="(mission.status == 0)">Planning...</span>
                             <span ng-if="(mission.status == 1)">On DUTY</span>
                             <span ng-if="(mission.status == 2)">Completed</span>
+                            <span ng-if="(mission.status == 3)">Aborted</span>
                         </td>
                         <td class="text-center">
                             <a ng-href="#/mission/plan/{{mission.id}}" class="btn btn-success btn-sm"
@@ -40,10 +41,10 @@
                             <a class="btn btn-danger btn-sm"
                                ng-if="(mission.status == 0)"><i class="fa fa-fw fa-times"></i>Abort </a>
                             <a class="btn btn-warning btn-sm" ng-href="#/mission/update/{{mission.id}}"
-                               ng-if="(mission.status == 0)"><i class="fa fa-fw fa-times"></i>Edit </a>
+                               ng-if="(mission.status == 0)"><i class="fa fa-fw fa-edit"></i>Edit </a>
 
-                            <a ng-if="(mission.status == 1)">DEVAM EDİYOR</a>
-                            <a class="btn btn-" ng-if="(mission.status == 2)">TAMAMLANDI</a>
+                            <a class="btn btn-info btn-sm" ng-if="(mission.status == 1)"><i class="fa fa-fw fa-eye"></i> Chase Mission</a>
+                            <a class="btn btn-info btn-sm" ng-if="(mission.status == 2)"><i class="fa fa-fw fa-file-o"></i> Mission Report</a>
                         </td>
                     </tr>
                     </tbody>

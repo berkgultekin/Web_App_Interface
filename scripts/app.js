@@ -16,7 +16,7 @@ var app = angular
 	.config(function ($localStorageProvider, $urlRouterProvider) {
 		$localStorageProvider.setKeyPrefix('icond-admin-');
 	})
-	.run(function ($rootScope, statesTree, $state, $http, $timeout) {
+	.run(function ($rootScope, statesTree, $state, $http, $timeout, Store) {
 		/* Loader Controls */
         $rootScope.loader = 'hidden';
         $rootScope.showLoader = function(){
@@ -58,8 +58,16 @@ var app = angular
 
 		console.log($rootScope.sideMenuArray);
 
+
+		if(Store.isset('user')){
+			$rootScope.user =Store.get('user');
+			console.log($rootScope.user);
+            $state.go('content.mission.list');
+		}else{
+            $state.go('login');
+		}
+
 		//$state.go('content.init');
-		$state.go('login');
 		//$state.go('init');
 
 		$rootScope.$state = $state;
@@ -85,7 +93,7 @@ app.factory('HttpResponseInterceptor', function ($q, $sce, API, Store, $rootScop
                 config.headers['Authorization'] = "Basic "+Store.get("token");
                 console.log("OF", Store.get("token"));
             }
-
+            config.headers['Content-Type'] =  'application/json';
             return config;
         },
         'response': function (response) {
@@ -106,6 +114,7 @@ app.factory('HttpResponseInterceptor', function ($q, $sce, API, Store, $rootScop
 app.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    $httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
     $httpProvider.defaults.headers.common = {};
     $httpProvider.defaults.headers.post = {};
     $httpProvider.defaults.headers.put = {};
