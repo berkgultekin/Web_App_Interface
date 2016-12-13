@@ -11,7 +11,6 @@
 			controller: 'AppController',
 			controllerAs: 'vm',
 			templateUrl: "views/dashboard/dashboard.index.html",
-			abstract: true,
 			data: {
 				sideMenu: {
 					text: 'Dashboard',

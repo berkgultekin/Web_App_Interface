@@ -10,16 +10,15 @@ var app = angular
 		'ngStorage',
 		'ui.router',
 		'statesTree',
-		"openlayers-directive"
+		"openlayers-directive",
+		'toastr'
 	])
 	.config(function ($localStorageProvider, $urlRouterProvider) {
 		$localStorageProvider.setKeyPrefix('icond-admin-');
 	})
 	.run(function ($rootScope, statesTree, $state, $http, $timeout) {
-
-
 		/* Loader Controls */
-        $rootScope.loader = 'shown';
+        $rootScope.loader = 'hidden';
         $rootScope.showLoader = function(){
             $rootScope.loader = 'shown';
         }
@@ -68,9 +67,8 @@ var app = angular
 
 app.constant('API', {
 	//"url": 'http://localhost:8090/myapp/',
-	"url": "http://fe2a5815.ngrok.io/myapp/"
+	"url": "http://d8472682.ngrok.io/myapp/"
 });
-
 app.factory('HttpResponseInterceptor', function ($q, $sce, API, Store, $rootScope, $injector) {
 
     var helper = {
@@ -81,11 +79,13 @@ app.factory('HttpResponseInterceptor', function ($q, $sce, API, Store, $rootScop
 
     var interceptor = {
         'request': function (config) {
-            console.log(config);
-            var email = "e194190@metu.edu.tr";
-            var pass = "12345678";
-            config.headers['Authorization'] = "Basic "+helper.base64Encode(email+":"+pass);
-            console.log("Deneme", config);
+            if(Store.isset("token")){
+                var email = "e194190@metu.edu.tr";
+                var pass = "12345678";
+                config.headers['Authorization'] = "Basic "+Store.get("token");
+                console.log("OF", Store.get("token"));
+            }
+
             return config;
         },
         'response': function (response) {

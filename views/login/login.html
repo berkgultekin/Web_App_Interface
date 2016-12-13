@@ -2,7 +2,7 @@
     <a class="hiddenanchor" id="signup"></a>
     <a class="hiddenanchor" id="signin"></a>
 
-    <div class="login_wrapper">
+    <div class="login_wrapper" style="margin-top: 0px;">
         <div class="animate form login_form">
             <section class="login_content">
                 <form>
@@ -11,13 +11,13 @@
                         Search&Rescue
                     </h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="Email" required="" />
+                        <input type="text" class="form-control" placeholder="Email" ng-model="loginModel.email" required="" />
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" required="" />
+                        <input type="password" class="form-control" placeholder="Password" ng-model="loginModel.password" required="" />
                     </div>
                     <div>
-                        <a class="btn btn-default submit" href="index.html">Login</a>
+                        <a class="btn btn-default submit" href="javascript:void(0);" ng-click="login()">Login</a>
                     </div>
 
                     <div class="clearfix"></div>

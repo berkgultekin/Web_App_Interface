@@ -14,7 +14,12 @@ app.factory('PersonService', function (API, $http, $filter, $rootScope) {
         },
         updatePerson: function (person, person_id) {
             return $http.put(API.url + 'person/update/' + person_id, person);
-        }
+        },
+		login: function(token){
+			return $http.get(API.url + 'person/login',{
+                headers: {'Authorization': 'Basic '+token}
+            });
+		}
 	};
 
 	return person;

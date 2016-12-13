@@ -5097,3 +5097,7 @@ ul.notifications {
   bottom: 0;
   right: 0;
 }
+
+.left_col{
+  min-height: 900px;
+}

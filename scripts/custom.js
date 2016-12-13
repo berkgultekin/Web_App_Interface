@@ -57,10 +57,6 @@ function initMenu(){
 // Sidebar
 $(document).ready(function () {
 	// TODO: This is some kind of easy fix, maybe we can improve this
-
-
-
-
 	// toggle small or large menu
 	$MENU_TOGGLE.on('click', function () {
 		if ($BODY.hasClass('nav-md')) {
