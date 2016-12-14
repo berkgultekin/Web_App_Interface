@@ -3,13 +3,18 @@ angular.module('openlayers-directive').directive('olDraw', ["$log", "$q", "olMap
         restrict: 'E',
         scope: {
             properties: '=olGeomProperties',
-            style: '=olStyle'
+            style: '=olStyle',
+            status: '@',
+            onDrawEnd: '&'
         },
         require: '^openlayers',
         replace: true,
         template: '<div class="popup-label path" ng-bind-html="message"></div>',
-
         link: function (scope, element, attrs, controller) {
+            var activeStatus = false;
+
+
+
             var isDefined = olHelpers.isDefined;
             var createFeature = olHelpers.createFeature;
             var createOverlay = olHelpers.createOverlay;
@@ -18,21 +23,25 @@ angular.module('openlayers-directive').directive('olDraw', ["$log", "$q", "olMap
             var removeLayer = olHelpers.removeLayer;
             var olScope = controller.getOpenlayersScope();
 
+            var features = new ol.Collection();
+            var modify = new ol.interaction.Modify({
+                features: features,
+                deleteCondition: function (event) {
+                    return ol.events.condition.shiftKeyOnly(event) &&
+                        ol.events.condition.singleClick(event);
+                }
+            });
+            var draw; // global so we can remove it later
+            draw = new ol.interaction.Draw({
+                condition: false,
+                features: features,
+                type: ol.geom.GeometryType.POLYGON
+            });
             olScope.getMap().then(function (map) {
                 var mapDefaults = olMapDefaults.getDefaults(olScope);
                 var viewProjection = mapDefaults.view.projection;
 
-                var raster = new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                });
-                var layerCollection = map.getLayers();
 
-                insertLayer(layerCollection, layerCollection.getLength(), raster);
-
-                scope.$on('$destroy', function () {
-                    removeLayer(layerCollection, layer.index);
-                });
-                var features = new ol.Collection();
                 var featureOverlay = new ol.layer.Vector({
                     source: new ol.source.Vector({features: features}),
                     style: new ol.style.Style({
@@ -52,23 +61,33 @@ angular.module('openlayers-directive').directive('olDraw', ["$log", "$q", "olMap
                     })
                 });
                 featureOverlay.setMap(map);
-                var modify = new ol.interaction.Modify({
-                    features: features,
-                    // the SHIFT key must be pressed to delete vertices, so
-                    // that new vertices can be drawn at the same position
-                    // of existing vertices
-                    deleteCondition: function (event) {
-                        return ol.events.condition.shiftKeyOnly(event) &&
-                            ol.events.condition.singleClick(event);
+
+
+                draw.on('drawend',function(event, deneme){
+                    scope.onDrawEnd({data: event});
+
+                })
+
+                attrs.$observe('status', function(status) {
+                    console.log(status, activeStatus);
+                    if(status == true || status == 'true'){
+                        if(activeStatus == false){
+                            console.log("Aktiflestirmeye girdi")
+                            map.addInteraction(modify);
+                            map.addInteraction(draw);
+                            activeStatus = true;
+                        }
+                    }else{
+                        if(activeStatus == true){
+                            console.log("DEDEAktiflestirmeye girdi")
+
+                            map.removeInteraction(modify);
+                            map.removeInteraction(draw);
+                            activeStatus = false;
+                        }
                     }
+                    console.log(status)
                 });
-                map.addInteraction(modify);
-                var draw; // global so we can remove it later
-                draw = new ol.interaction.Draw({
-                    features: features,
-                    type: ol.geom.GeometryType.POLYGON
-                });
-                map.addInteraction(draw);
             });
         }
     };
