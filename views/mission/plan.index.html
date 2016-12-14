@@ -72,6 +72,8 @@
                         <openlayers ol-center="center" ol-defaults="defaults" height="400">
                             <ol-layer ol-layer-properties="map.layers.bing"></ol-layer>
                             <ol-marker ng-repeat="marker in markers" lat="marker.lat" lon="marker.lon" ol-style="marker.style" ></ol-marker>
+                            <ol-draw status="{{polyDrawActive}}" active-type="{{activeType}}" on-draw-end="drawend(data)"></ol-draw>
+                            <ol-polygon ng-repeat="polygon in polygons" message="{{polygon.message}}" coords="{{polygon.coords}}" ol-style="polygon.style"></ol-polygon>
                         </openlayers>
                         <div ng-if="drawingActive" style="padding:5px; border: 1px solid #fff; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
                             <strong>Drawing Mode is ACTIVE</strong>
@@ -79,7 +81,7 @@
                             <button type="button" class="btn btn-xs btn-danger pull-right" ng-click="cancelAction()"><i class="fa fa-fw fa-times"></i> Cancel</button>
                         </div>
                         <div>
-                            {{markers}}
+                            {{polyDrawActive}}
                         </div>
                     </div>
                     <div class="col-xs-2">
@@ -95,9 +97,9 @@
                                     <a ng-click="addPoint(3)" class="has-cursor"><i class="fa fa-fw fa-plus"></i> Add Meeting Point<img src="images/markers/meeting.png" style="width:18px"></a><br />
                                     <hr />
                                     <p class="title">Areas</p>
-                                    <i class="fa fa-fw fa-plus"></i> Add Search Area<br />
-                                    <i class="fa fa-fw fa-plus"></i> Add Secure Area<br />
-                                    <i class="fa fa-fw fa-calculator"></i> Calculate Area (km<sup>2</sup>)<br />
+                                    <a ng-click="drawPolygon(5)" class="has-cursor"><i class="fa fa-fw fa-plus"></i> Add Search Area</a><br />
+                                    <a ng-click="drawPolygon(6)" class="has-cursor"><i class="fa fa-fw fa-plus"></i> Add Secure Area</a><br />
+                                    <a ng-click="drawPolygon(7)" class="has-cursor"><i class="fa fa-fw fa-calculator"></i> Calculate Area (km<sup>2</sup>)</a><br />
 
                                     <hr />
                                     <p class="title">Paths</p>
@@ -119,3 +121,5 @@
         </div>
     </div>
 </div>
+
+

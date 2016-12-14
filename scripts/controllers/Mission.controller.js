@@ -82,9 +82,19 @@
         /* init plan page */
         $scope.initPlan = function () {
             $rootScope.showLoader();
+
+            $scope.getPoints($stateParams.missionId);
+
             MissionService.getMission($stateParams.missionId).then(function (response) {
                 console.log(response);
                 $scope.mission = response.data;
+
+                if($scope.mission.persons.length > 0){
+                    angular.forEach($scope.mission.persons, function(value, key){
+                        $scope.teamMembers.push(value);
+                    })
+                }
+
                 $rootScope.hideLoader();
             });
 
@@ -119,7 +129,8 @@
                         }
                     }
                 },
-                markers: {}
+                markers: {},
+                polygons: {}
             });
 
         }
@@ -176,6 +187,47 @@
             MissionService.addPersontoMission($stateParams.missionId, addedPerson.id).then(function (response) {
                 console.log(response);
                 $rootScope.hideLoader();
+            });
+        }
+
+        $scope.getPoints = function(mission_id){
+            var messages = {
+                6: "Secure Area",
+                5: "Search Area",
+            }
+            GPSService.listMission(mission_id).then(function(response){
+                var arrangedPolygons = {};
+                var arrangedMarkers = [];
+
+
+
+                angular.forEach(response.data, function(value, key){
+                    if(value.type == 1 || value.type == 2 || value.type == 3){
+                        arrangedMarkers.push({
+                            lat: value.latitude,
+                            lon: value.longitude,
+                            style: MarkerStyles['point_'+value.type],
+                            id: value.id
+                        });
+                    }else if(value.type == 5 || value.type == 6){ //polygon
+                        if(typeof arrangedPolygons[value.group_key] == 'undefined'){
+                            arrangedPolygons[value.group_key] = {
+                                key: value.groupkey,
+                                coords: [[]],
+                                style: PolygonStyles['polygon_' + value.type],
+                                message: messages[value.type]
+                            };
+                        }
+                        arrangedPolygons[value.group_key].coords[0].push([value.latitude, value.longitude]);
+                    }
+
+                });
+
+                angular.forEach(arrangedMarkers, function(value, key){
+                    $scope.markers[value.id] = value;
+                })
+
+                $scope.polygons = arrangedPolygons;
             });
         }
 
