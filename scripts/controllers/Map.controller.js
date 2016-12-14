@@ -5,8 +5,6 @@
         .controller('MapController', MapController);
 
     function MapController($scope, MissionService, PersonService, GPSService, $state, $stateParams, $rootScope, toastr, $timeout) {
-        $scope.denebakalim = PolygonStyles.polygon_5;
-
         $scope.drawingItemNumber = 100000;
         $scope.polyDrawActive = false;
         $scope.drawingList = [];
@@ -162,7 +160,6 @@
             };
             angular.forEach(coordinates, function (value, key) {
                 var latlon = ol.proj.transform(value, 'EPSG:3857', 'EPSG:4326')
-                console.log(latlon);
                 polygon.coordinates.push({
                     latitude: latlon[0],
                     longitude: latlon[1],

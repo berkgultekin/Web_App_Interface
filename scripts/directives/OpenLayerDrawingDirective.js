@@ -12,9 +12,6 @@ angular.module('openlayers-directive').directive('olDraw', ["$log", "$q", "olMap
         template: '<div class="popup-label path" ng-bind-html="message"></div>',
         link: function (scope, element, attrs, controller) {
             var activeStatus = false;
-
-
-
             var isDefined = olHelpers.isDefined;
             var createFeature = olHelpers.createFeature;
             var createOverlay = olHelpers.createOverlay;
@@ -69,24 +66,19 @@ angular.module('openlayers-directive').directive('olDraw', ["$log", "$q", "olMap
                 })
 
                 attrs.$observe('status', function(status) {
-                    console.log(status, activeStatus);
                     if(status == true || status == 'true'){
                         if(activeStatus == false){
-                            console.log("Aktiflestirmeye girdi")
                             map.addInteraction(modify);
                             map.addInteraction(draw);
                             activeStatus = true;
                         }
                     }else{
                         if(activeStatus == true){
-                            console.log("DEDEAktiflestirmeye girdi")
-
                             map.removeInteraction(modify);
                             map.removeInteraction(draw);
                             activeStatus = false;
                         }
                     }
-                    console.log(status)
                 });
             });
         }

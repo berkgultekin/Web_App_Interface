@@ -86,7 +86,6 @@
             $scope.getPoints($stateParams.missionId);
 
             MissionService.getMission($stateParams.missionId).then(function (response) {
-                console.log(response);
                 $scope.mission = response.data;
 
                 if($scope.mission.persons.length > 0){
@@ -101,7 +100,6 @@
             $scope.teamMembers = [];
             $scope.personList = [];
             PersonService.getPeople().then(function (response) {
-                console.log(response.data);
                 $scope.personList = response.data;
             });
 
@@ -154,7 +152,6 @@
             $rootScope.showLoader();
             $scope.newMission ={};
             MissionService.getMission($stateParams.missionId).then(function (response) {
-                console.log(response);
                 $scope.newMission = response.data;
                 $rootScope.hideLoader();
 
@@ -181,11 +178,8 @@
         $scope.additionofTeamMember = function (addedPerson) {
             $rootScope.showLoader();
 
-            console.log(addedPerson);
-            //return;
-            $scope.teamMembers.push(addedPerson);
             MissionService.addPersontoMission($stateParams.missionId, addedPerson.id).then(function (response) {
-                console.log(response);
+                $scope.teamMembers.push(addedPerson);
                 $rootScope.hideLoader();
             });
         }

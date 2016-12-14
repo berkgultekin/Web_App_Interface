@@ -34,7 +34,6 @@ angular.module('openlayers-directive').directive('olPolygon', ["$log", "$q", "ol
 
                 if (isDefined(attrs.coords)) {
                     var proj = attrs.proj || 'EPSG:4326';
-                    console.log("Directive", attrs.coords)
                     var coords = JSON.parse(attrs.coords);
                     var data = {
                         type: 'Polygon',
