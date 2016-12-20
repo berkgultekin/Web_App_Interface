@@ -63,6 +63,17 @@
                 missionId: null
             }
         });
+        $stateProvider.state('content.mission.chase', {
+            url: "/chase/:missionId",
+            controller: 'MissionController',
+            templateUrl: "views/mission/chase.index.html",
+            data: {
+                sideMenu: null,
+            },
+            params: {
+                missionId: null
+            }
+        });
 
     }
 
@@ -77,6 +88,12 @@
                 $scope.missionList = response.data;
                 $rootScope.hideLoader();
             });
+        }
+
+        $scope.initChase = function(){
+            $scope.initPlan();
+
+            /* Get all people's last GPSLog */
         }
 
         /* init plan page */

@@ -43,7 +43,7 @@
                             <a class="btn btn-warning btn-sm" ng-href="#/mission/update/{{mission.id}}"
                                ng-if="(mission.status == 0)"><i class="fa fa-fw fa-edit"></i>Edit </a>
 
-                            <a class="btn btn-info btn-sm" ng-if="(mission.status == 1)"><i class="fa fa-fw fa-eye"></i> Chase Mission</a>
+                            <a  ng-href="#/mission/chase/{{mission.id}}" class="btn btn-info btn-sm" ng-if="(mission.status == 1)"><i class="fa fa-fw fa-eye"></i> Chase Mission</a>
                             <a class="btn btn-info btn-sm" ng-if="(mission.status == 2)"><i class="fa fa-fw fa-file-o"></i> Mission Report</a>
                         </td>
                     </tr>
