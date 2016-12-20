@@ -5,6 +5,30 @@
         .controller('MapController', MapController);
 
     function MapController($scope, MissionService, PersonService, GPSService, $state, $stateParams, $rootScope, toastr, $timeout) {
+
+        /* area calculation */
+
+        $scope.toRadian( input)
+        {
+            return input * Math.PI / 180;
+        }
+        $scope.getArea(coordinates)
+        {
+            var p1, p2;
+            var area = 0;
+            if (coordinates.length > 2){
+                for (var i = 0; i < coordinates.length - 1; i++)
+                {
+                    p1 = coordinates[i];
+                    p2 = coordinates[i + 1];
+                    area += (p2.longitude - p1.longitude) * (2 + Math.Sin(toRadian(p1.latitude)) + Math.Sin(toRadian(p2.latitude)));
+                }
+                area *= (6378137 * 6378137) / 2;
+            }
+            return Math.Abs(area);
+        }
+        /* area calc finished*/
+
         $scope.drawingItemNumber = 100000;
         $scope.polyDrawActive = false;
         $scope.drawingList = [];
@@ -150,10 +174,12 @@
         }
 
         $scope.drawend = function (data) {
+            console.log(data.feature);
             var all_coordinates = data.feature.getGeometry().getCoordinates();
             var coordinates = all_coordinates[0];
 
             var polygon = {
+                area: data.feature.getGeometry().getArea(),
                 shape_type: "polygon",
                 type: $scope.activeType,
                 coordinates: []
