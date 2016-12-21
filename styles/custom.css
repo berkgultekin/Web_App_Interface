@@ -5101,3 +5101,20 @@ ul.notifications {
 .left_col{
   min-height: 900px;
 }
+
+.search-area{
+  border: 1px solid #ffcc33;
+  background: rgba(255, 204, 51, 0.15);
+  width:15px;
+  height:15px;
+  display: inline-block;
+}
+
+
+.secure-area{
+  border: 1px solid #4789ff;
+  background: rgba(71, 137, 255, 0.15);
+  width:15px;
+  height:15px;
+  display: inline-block;
+}
