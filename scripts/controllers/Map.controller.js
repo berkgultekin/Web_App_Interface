@@ -8,11 +8,12 @@
 
         /* area calculation */
 
-        $scope.toRadian( input)
+        $scope.toRadian = function( input)
         {
             return input * Math.PI / 180;
         }
-        $scope.getArea(coordinates)
+
+        $scope.getArea= function(coordinates)
         {
             var p1, p2;
             var area = 0;

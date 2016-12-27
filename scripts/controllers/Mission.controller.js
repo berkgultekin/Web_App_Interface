@@ -91,8 +91,12 @@
         }
 
         $scope.initChase = function(){
+            $scope.activePositions = [];
             $scope.initPlan();
 
+            GPSService.active($stateParams.missionId).then(function(response){
+                $scope.activePositions = response.data;
+            });
             /* Get all people's last GPSLog */
         }
 

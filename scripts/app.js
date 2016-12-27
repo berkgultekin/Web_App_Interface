@@ -75,7 +75,7 @@ var app = angular
 
 app.constant('API', {
 	//"url": 'http://localhost:8090/myapp/',
-	"url": "http://5498af69.ngrok.io/myapp/"
+	"url": "http://3d1f1a8f.ngrok.io/myapp/"
 });
 app.factory('HttpResponseInterceptor', function ($q, $sce, API, Store, $rootScope, $injector) {
 

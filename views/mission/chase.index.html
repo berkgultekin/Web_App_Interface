@@ -95,7 +95,9 @@
                             <ol-marker ng-repeat="marker in markers" lat="marker.lat" lon="marker.lon" ol-style="marker.style" ></ol-marker>
                             <ol-draw status="{{polyDrawActive}}" active-type="{{activeType}}" on-draw-end="drawend(data)"></ol-draw>
                             <ol-polygon ng-repeat="polygon in polygons" message="{{polygon.message}}" coords="{{polygon.coords}}" ol-style="polygon.style"></ol-polygon>
+                            <ol-marker ng-repeat="pos in activePositions" lat="pos.latitude" lon="pos.longitude"></ol-marker>
                         </openlayers>
+                        {{activePositions}}
                         <div ng-if="drawingActive" style="padding:5px; border: 1px solid #fff; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
                             <strong>Drawing Mode is ACTIVE</strong>
                             <button type="button" class="btn btn-xs btn-success pull-right" ng-click="saveAction()"><i class="fa fa-fw fa-save"></i> Save</button>

@@ -29,7 +29,10 @@ app.factory('GPSService', function (API, $http, $filter, $rootScope) {
         },
         types: function () {
             return $http.get(API.url + 'gpslog/types');
-        }
+        },
+        active: function (mission_id) {
+            return $http.get(API.url + 'gpslog/active/' + mission_id);
+        },
     };
     return gps;
 });
