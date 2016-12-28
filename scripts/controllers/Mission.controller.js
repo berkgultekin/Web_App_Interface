@@ -78,7 +78,7 @@
     }
 
 
-    function MissionController($scope, MissionService, PersonService, GPSService, $state, $stateParams, $rootScope) {
+    function MissionController($scope, MissionService, PersonService, GPSService, $state, $stateParams, $rootScope, $interval   ) {
 
         /* init list page */
         $scope.initList = function () {
@@ -90,13 +90,37 @@
             });
         }
 
-        $scope.initChase = function(){
+        $scope.initChase = function () {
             $scope.activePositions = [];
             $scope.initPlan();
 
-            GPSService.active($stateParams.missionId).then(function(response){
-                $scope.activePositions = response.data;
-            });
+
+            var mappingInterval = $interval(function(){
+                if($scope.teamMemberDictionary.length > 0){
+                    $interval.cancel(mappingInterval);
+                    GPSService.active($stateParams.missionId).then(function (response) {
+                        var tmp = response.data;
+
+                        angular.forEach(tmp, function (val, key) {
+                            /* $scope.teamMemberDictionary[value.id].style*/
+                            console.log($scope.teamMemberDictionary[val.person_id].marker_path, $scope.teamMemberDictionary[val.person_id]);
+                            val.style = {
+                                image: {
+                                    icon: {
+                                        anchor: [0.5, 1],
+                                        anchorXUnits: 'fraction',
+                                        anchorYUnits: 'fraction',
+                                        opacity: 0.90,
+                                        src: $scope.teamMemberDictionary[val.person_id].marker_path, //value.marker_path
+                                    }
+                                }
+                            };
+                        });
+                        $scope.activePositions = response.data;
+                    });
+                }
+            },500);
+
             /* Get all people's last GPSLog */
         }
 
@@ -105,21 +129,24 @@
             $rootScope.showLoader();
 
             $scope.getPoints($stateParams.missionId);
-
+            $scope.teamMembers = [];
+            $scope.teamMemberDictionary = [];
+            $scope.personList = [];
             MissionService.getMission($stateParams.missionId).then(function (response) {
                 $scope.mission = response.data;
 
-                if($scope.mission.persons.length > 0){
-                    angular.forEach($scope.mission.persons, function(value, key){
+                if ($scope.mission.persons.length > 0) {
+                    angular.forEach($scope.mission.persons, function (value, key) {
                         $scope.teamMembers.push(value);
+                        $scope.teamMemberDictionary[value.id] = value;
+
                     })
+                    console.log($scope.teamMemberDictionary);
                 }
 
                 $rootScope.hideLoader();
             });
 
-            $scope.teamMembers = [];
-            $scope.personList = [];
             PersonService.getPeople().then(function (response) {
                 $scope.personList = response.data;
             });
@@ -171,7 +198,7 @@
         /* init update page */
         $scope.initUpdate = function () {
             $rootScope.showLoader();
-            $scope.newMission ={};
+            $scope.newMission = {};
             MissionService.getMission($stateParams.missionId).then(function (response) {
                 $scope.newMission = response.data;
                 $rootScope.hideLoader();
@@ -182,11 +209,11 @@
         /* update mission */
         $scope.update = function () {
             var filtered = {
-                name : $scope.newMission.name,
-                location : $scope.newMission.location,
-                description : $scope.newMission.description,
-                date_start : $scope.newMission.date_start,
-                date_end : $scope.newMission.date_end
+                name: $scope.newMission.name,
+                location: $scope.newMission.location,
+                description: $scope.newMission.description,
+                date_start: $scope.newMission.date_start,
+                date_end: $scope.newMission.date_end
             };
 
             MissionService.updateMission(filtered, $scope.newMission.id).then(function (response) {
@@ -205,27 +232,26 @@
             });
         }
 
-        $scope.getPoints = function(mission_id){
+        $scope.getPoints = function (mission_id) {
             var messages = {
                 6: "Secure Area",
                 5: "Search Area",
             }
-            GPSService.listMission(mission_id).then(function(response){
+            GPSService.listMission(mission_id).then(function (response) {
                 var arrangedPolygons = {};
                 var arrangedMarkers = [];
 
 
-
-                angular.forEach(response.data, function(value, key){
-                    if(value.type == 1 || value.type == 2 || value.type == 3){
+                angular.forEach(response.data, function (value, key) {
+                    if (value.type == 1 || value.type == 2 || value.type == 3) {
                         arrangedMarkers.push({
                             lat: value.latitude,
                             lon: value.longitude,
-                            style: MarkerStyles['point_'+value.type],
+                            style: MarkerStyles['point_' + value.type],
                             id: value.id
                         });
-                    }else if(value.type == 5 || value.type == 6){ //polygon
-                        if(typeof arrangedPolygons[value.group_key] == 'undefined'){
+                    } else if (value.type == 5 || value.type == 6) { //polygon
+                        if (typeof arrangedPolygons[value.group_key] == 'undefined') {
                             arrangedPolygons[value.group_key] = {
                                 key: value.groupkey,
                                 coords: [[]],
@@ -238,7 +264,7 @@
 
                 });
 
-                angular.forEach(arrangedMarkers, function(value, key){
+                angular.forEach(arrangedMarkers, function (value, key) {
                     $scope.markers[value.id] = value;
                 })
 

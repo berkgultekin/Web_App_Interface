@@ -8,6 +8,20 @@
 
         /* area calculation */
 
+        $scope.getMarkerStyle = function (imagePath) {
+            return {
+                image: {
+                    icon: {
+                        anchor: [0.5, 1],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'fraction',
+                        opacity: 0.90,
+                        src: imagePath
+                    }
+                }
+            }
+        }
+
         $scope.toRadian = function( input)
         {
             return input * Math.PI / 180;
