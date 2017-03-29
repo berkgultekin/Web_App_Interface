@@ -96,14 +96,17 @@
                                     <p class="title">Areas</p>
                                     <a ng-click="drawPolygon(5)" class="has-cursor"><i class="fa fa-fw fa-plus"></i> Add Search Area</a> <div class="search-area"></div><br />
                                     <a ng-click="drawPolygon(6)" class="has-cursor"><i class="fa fa-fw fa-plus"></i> Add Secure Area</a> <div class="secure-area"></div><br />
-                                    <a ng-click="drawPolygon(7)" class="has-cursor"><i class="fa fa-fw fa-calculator"></i> Calculate Area (km<sup>2</sup>)</a><br />
+                                    <a style="display: none;" ng-click="drawPolygon(7)" class="has-cursor"><i class="fa fa-fw fa-calculator"></i> Calculate Area (km<sup>2</sup>)</a><br />
 
                                     <hr />
-                                    <p class="title">Paths</p>
-                                    <i class="fa fa-fw fa-plus"></i> Add Designated Path<br />
-                                    <i class="fa fa-fw fa-plus"></i> Add Secure Path<br />
-                                    <i class="fa fa-fw fa-calculator"></i> Calculate Distance (m)<br />
-                                    <hr />
+                                    <div style="display: none;">
+                                        <p class="title">Paths</p>
+                                        <i class="fa fa-fw fa-plus"></i> Add Designated Path<br />
+                                        <i class="fa fa-fw fa-plus"></i> Add Secure Path<br />
+                                        <i style="display: none;" class="fa fa-fw fa-calculator"></i> Calculate Distance (m)<br />
+                                        <hr />
+                                    </div>
+
                                 </div>
                         </section>
                     </div>
@@ -113,7 +116,7 @@
 
                 <button class="btn btn-dark"><i class="fa fa-fw fa-bullseye"></i> </button>
                 <button class="btn btn-dark"><i class="fa fa-fw fa-bullseye"></i> Control/Ping Network & Equipments</button>
-                <button class="btn btn-success"><i class="fa fa-fw fa-flag"></i> Start Mission</button>
+                <button class="btn btn-success" ng-click="startMission()"><i class="fa fa-fw fa-flag"></i> Start Mission</button>
             </div>
         </div>
     </div>

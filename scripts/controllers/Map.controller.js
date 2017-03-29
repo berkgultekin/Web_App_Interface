@@ -140,7 +140,8 @@
                         latitude: val.position.lat,
                         longitude: val.position.lon,
                         mission_id: $scope.mission.id,
-                        mission_person_id: 8,//1,
+                        person_id: 35,
+                        // mission_person_id: 8,//1,
                         time: '2016-11-19T20:42:55'
                     });
                 });
@@ -202,11 +203,12 @@
             angular.forEach(coordinates, function (value, key) {
                 var latlon = ol.proj.transform(value, 'EPSG:3857', 'EPSG:4326')
                 polygon.coordinates.push({
-                    latitude: latlon[0],
-                    longitude: latlon[1],
+                    latitude: latlon[1],
+                    longitude: latlon[0],
                     type: $scope.activeType,
                     mission_id: $scope.mission.id,
-                    mission_person_id: 8,//1,
+                    //mission_person_id: 8,//1,
+                    person_id: 35,
                     time: '2016-11-19T20:42:55'
                 });
 

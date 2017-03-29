@@ -17,7 +17,10 @@ app.factory('MissionService', function (API, $http, $filter, $rootScope) {
         },
         addPersontoMission: function (mission_id, person_id) {
             return $http.post(API.url + 'mission/add-person?mission-id=' + mission_id + "&person-id=" + person_id);
-        }
+        },
+		start: function(mission_id){
+            return $http.get(API.url + 'mission/start/' + mission_id);
+		}
 	};
 
 	return mission;

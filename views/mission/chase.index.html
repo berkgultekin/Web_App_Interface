@@ -2,6 +2,26 @@
 .has-cursor{
     cursor: pointer;
 }
+.blinkOp {
+    animation: blinker 1s linear 10;
+ }
+
+@keyframes blinker {
+    0%{
+        color: #8a6d3b;
+        background-color: #fcf8e3;
+    }
+    50% {
+        opacity: 0.0;
+        color: #8a6d3b;
+        background-color: #fcf8e3;
+    }
+    100%{
+        color: #8a6d3b;
+        background-color: #fcf8e3;
+    }
+}
+
 </style>
 <div class="row" ng-init="initChase()">
 
@@ -74,9 +94,26 @@
                                 </tr>
                                 <tr>
                                     <td class="text-center">
-                                        <i>No record.</i><br />
-                                        <a class="green"><i class="fa fa-fw fa-plus"></i> add equipment to mission/person</a>
-
+                                        Smartglass (Recon)<br>
+                                        Smartphone
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Activity Feed (Media etc.)</th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        <div ng-if="feed.length == 0">
+                                            <i>No record.</i>
+                                        </div>
+                                        <div ng-if="feed.length > 0" style="max-height: 300px;overflow-y: scroll;">
+                                            <ul class="list-group" style="text-align: left">
+                                                <li ng-repeat="f in feed | reverse" class="has-cursor list-group-item blinkOp" ng-click="showEventDetail(f)">
+                                                    <i class="fa fa-fw fa-warning"></i>
+                                                    You received <strong>media</strong> from mission area (By Tuğca Eker). <small>(<i class="fa fa-fw fa-clock-o"></i> {{f.unixtime * 1000  | date:'yyyy-MM-dd HH:mm:ss Z'}})</small>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -97,7 +134,6 @@
                             <ol-polygon ng-repeat="polygon in polygons" message="{{polygon.message}}" coords="{{polygon.coords}}" ol-style="polygon.style"></ol-polygon>
                             <ol-marker ng-repeat="pos in activePositions" lat="pos.latitude" lon="pos.longitude" ol-style="pos.style"></ol-marker>
                         </openlayers>
-                        {{activePositions}}
                         <div  ng-repeat="pos in activePositions">
                             {{teamMemberDictionary[pos.person_id].style}}
                         </div>
@@ -108,7 +144,6 @@
                         </div>
                     </div>
                 </div>
-                <div style="clear: both;"></div>
                 <button class="btn danger"><i class="fa fa-fw fa-times"></i> Abort Mission</button>
             </div>
         </div>

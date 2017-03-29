@@ -78,7 +78,7 @@
     }
 
 
-    function MissionController($scope, MissionService, PersonService, GPSService, $state, $stateParams, $rootScope, $interval   ) {
+    function MissionController($scope, ModalService, MediaService, MissionService, PersonService, GPSService, $state, $stateParams, $rootScope, $interval   ) {
 
         /* init list page */
         $scope.initList = function () {
@@ -90,38 +90,110 @@
             });
         }
 
+        $scope.showEventDetail = function(ev){
+	        ModalService.showModal({
+		        templateUrl: "views/modal/eventmodal.html",
+		        controller: "ModalController",
+                inputs: {
+		            detail: ev,
+                    title: "Deneme",
+                }
+	        }).then(function(modal) {
+		        modal.element.modal();
+		        modal.close.then(function(result) {
+			        $scope.yesNoResult = result ? "You said Yes" : "You said No";
+		        });
+	        });
+        }
+
         $scope.initChase = function () {
             $scope.activePositions = [];
             $scope.initPlan();
-
-
+            $scope.feed = [];
+            $scope.listenMediaSince = 0;
+            var activeInterval;
             var mappingInterval = $interval(function(){
                 if($scope.teamMemberDictionary.length > 0){
                     $interval.cancel(mappingInterval);
-                    GPSService.active($stateParams.missionId).then(function (response) {
-                        var tmp = response.data;
 
-                        angular.forEach(tmp, function (val, key) {
-                            /* $scope.teamMemberDictionary[value.id].style*/
-                            console.log($scope.teamMemberDictionary[val.person_id].marker_path, $scope.teamMemberDictionary[val.person_id]);
-                            val.style = {
-                                image: {
-                                    icon: {
-                                        anchor: [0.5, 1],
-                                        anchorXUnits: 'fraction',
-                                        anchorYUnits: 'fraction',
-                                        opacity: 0.90,
-                                        src: $scope.teamMemberDictionary[val.person_id].marker_path, //value.marker_path
+                    activeInterval = $interval(function(){
+                        GPSService.active($stateParams.missionId).then(function (response) {
+                            var tmp = response.data;
+
+                            angular.forEach(tmp, function (val, key) {
+                                /* $scope.teamMemberDictionary[value.id].style*/
+                                console.log($scope.teamMemberDictionary[val.person_id].marker_path, $scope.teamMemberDictionary[val.person_id]);
+                                val.style = {
+                                    image: {
+                                        icon: {
+                                            anchor: [0.5, 1],
+                                            anchorXUnits: 'fraction',
+                                            anchorYUnits: 'fraction',
+                                            opacity: 0.90,
+                                            src: $scope.teamMemberDictionary[val.person_id].marker_path, //value.marker_path
+                                        }
                                     }
-                                }
-                            };
+                                };
+                            });
+                            $scope.activePositions = response.data;
                         });
-                        $scope.activePositions = response.data;
-                    });
+                    },7500);
+
                 }
             },500);
 
+            $scope.listenMedia();
+
             /* Get all people's last GPSLog */
+        }
+
+        $scope.listenMedia = function(){
+            $scope.isMediaListening = false;
+            $scope.existingMedia = [];
+	        $interval(function(){
+	            if($scope.isMediaListening) return false;
+	            var since = 0;
+		        $scope.isMediaListening = true;
+	            if(angular.isDefined($scope.listenMediaSince)){
+	                since = $scope.listenMediaSince;
+                }
+                MediaService.getSince(since).then(function(response){
+                    var hasNewEvent = false;
+                    if(angular.isDefined(response.data)){
+                        if(angular.isDefined(response.data.media)){
+                            if(response.data.media.length > 0){
+	                            angular.forEach(response.data.media, function(val, key){
+	                                console.log(val, key);
+	                                if($scope.existingMedia.indexOf(val.id) == -1){
+	                                    $scope.feed.push({
+	                                        "path" : "http://sr.dev/app/images/media/" + val.data,
+                                            "type" : val.type,
+                                            "id": val.id,
+                                            "unixtime": val.unixtime
+                                        });
+		                                $scope.existingMedia.push(val.id);
+		                                hasNewEvent = true;
+                                    }
+                                })
+
+                            }
+                        }
+	                    $scope.listenMediaSince = response.data.end;
+	                    $scope.isMediaListening = false;
+	                    if(hasNewEvent){
+                            $scope.playAudio();
+                        }
+                    }
+
+                });
+            },500);
+        }
+
+        $scope.playAudio = function () {
+	        $scope.playAudio = function() {
+		        var audio = new Audio('audio/beep.mp3');
+		        audio.play();
+	        };
         }
 
         /* init plan page */
@@ -187,7 +259,7 @@
 
             MissionService.addNewMission($scope.newMission).then(function (response) {
                 if (angular.isDefined(response.data) && angular.isDefined(response.data.id)) {
-                    $state.go('mission.plan', {missionId: response.data.id});
+                    $state.go('content.mission.plan', {missionId: response.data.id});
                 }
                 $rootScope.hideLoader();
 
@@ -222,6 +294,16 @@
 
         }
 
+        $scope.startMission = function(){
+            $rootScope.showLoader();
+
+            MissionService.start($stateParams.missionId).then(function (response) {
+                $rootScope.hideLoader();
+                $state.go('content.mission.chase', {missionId: $stateParams.missionId});
+            });
+
+        }
+
         /* add person to mission */
         $scope.additionofTeamMember = function (addedPerson) {
             $rootScope.showLoader();
@@ -241,6 +323,8 @@
                 var arrangedPolygons = {};
                 var arrangedMarkers = [];
 
+                console.log("Gelen Response:", response);
+
 
                 angular.forEach(response.data, function (value, key) {
                     if (value.type == 1 || value.type == 2 || value.type == 3) {
@@ -259,7 +343,9 @@
                                 message: messages[value.type]
                             };
                         }
-                        arrangedPolygons[value.group_key].coords[0].push([value.latitude, value.longitude]);
+                        arrangedPolygons[value.group_key].coords[0].push([value.longitude, value.latitude]);
+						
+						console.log("Lat", value.latitude);
                     }
 
                 });
@@ -269,6 +355,9 @@
                 })
 
                 $scope.polygons = arrangedPolygons;
+
+                console.log("Gelen Response:", $scope.polygons);
+
             });
         }
 

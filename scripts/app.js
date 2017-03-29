@@ -11,7 +11,8 @@ var app = angular
 		'ui.router',
 		'statesTree',
 		"openlayers-directive",
-		'toastr'
+		'toastr',
+		'angularModalService'
 	])
 	.config(function ($localStorageProvider, $urlRouterProvider) {
 		$localStorageProvider.setKeyPrefix('icond-admin-');
@@ -75,7 +76,8 @@ var app = angular
 
 app.constant('API', {
 	//"url": 'http://localhost:8090/myapp/',
-	"url": "http://3d1f1a8f.ngrok.io/myapp/"
+	//"url": "http://3d1f1a8f.ngrok.io/myapp/",
+	"url": "http://d328a64b.ngrok.io/myapp/"
 });
 app.factory('HttpResponseInterceptor', function ($q, $sce, API, Store, $rootScope, $injector) {
 
@@ -121,3 +123,32 @@ app.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.patch = {};
     $httpProvider.interceptors.push('HttpResponseInterceptor');
 }]);
+
+app.filter('reverse', function() {
+	return function(items) {
+		return items.slice().reverse();
+	};
+});
+
+app.controller('ModalController', [
+	'$scope', '$element', 'title', 'detail','close',
+	function($scope, $element, title, detail  ,close) {
+		$scope.detail = detail;
+		//  This close function doesn't need to use jQuery or bootstrap, because
+		//  the button has the 'data-dismiss' attribute.
+		$scope.close = function() {
+			close({},500); // close, but give 500ms for bootstrap to animate
+		};
+
+		//  This cancel function must use the bootstrap, 'modal' function because
+		//  the doesn't have the 'data-dismiss' attribute.
+		$scope.cancel = function() {
+
+			//  Manually hide the modal.
+			$element.modal('hide');
+
+			//  Now call close, returning control to the caller.
+			close({}, 500); // close, but give 500ms for bootstrap to animate
+		};
+
+	}]);
