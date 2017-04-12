@@ -1,11 +1,11 @@
 (function () {
-	'use strict';
+    'use strict';
 
-	angular.module('SearchRescueApp')
-		.config(stateConfig)
-		.controller('GISController', AppController);
+    angular.module('SearchRescueApp')
+        .config(stateConfig)
+        .controller('GISController', GISController);
 
-	function stateConfig($stateProvider) {
+    function stateConfig($stateProvider) {
         $stateProvider.state('mobile', {
             url: "/mobile",
             controller: 'GISController',
@@ -13,12 +13,12 @@
             data: {}
         });
 
-	}
+    }
 
-	function GISController(Store, toastr) {
+    function GISController(Store, toastr) {
 
 
-	}
+    }
 
 
 })();

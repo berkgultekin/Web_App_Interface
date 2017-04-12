@@ -1,4 +1,4 @@
-angular.module('openlayers-directive').directive('olPolygon', ["$log", "$q", "olMapDefaults", "olHelpers", function($log, $q, olMapDefaults, olHelpers) {
+angular.module('openlayers-directive').directive('olPolygon', ["$log", "$q", "olMapDefaults", "olHelpers", function ($log, $q, olMapDefaults, olHelpers) {
 
     return {
         restrict: 'E',
@@ -10,7 +10,7 @@ angular.module('openlayers-directive').directive('olPolygon', ["$log", "$q", "ol
         replace: true,
         template: '<div class="popup-label path" ng-bind-html="message"></div>',
 
-        link: function(scope, element, attrs, controller) {
+        link: function (scope, element, attrs, controller) {
             var isDefined = olHelpers.isDefined;
             var createFeature = olHelpers.createFeature;
             var createOverlay = olHelpers.createOverlay;
@@ -19,7 +19,7 @@ angular.module('openlayers-directive').directive('olPolygon', ["$log", "$q", "ol
             var removeLayer = olHelpers.removeLayer;
             var olScope = controller.getOpenlayersScope();
 
-            olScope.getMap().then(function(map) {
+            olScope.getMap().then(function (map) {
                 var mapDefaults = olMapDefaults.getDefaults(olScope);
                 var viewProjection = mapDefaults.view.projection;
 
@@ -28,7 +28,7 @@ angular.module('openlayers-directive').directive('olPolygon', ["$log", "$q", "ol
 
                 insertLayer(layerCollection, layerCollection.getLength(), layer);
 
-                scope.$on('$destroy', function() {
+                scope.$on('$destroy', function () {
                     removeLayer(layerCollection, layer.index);
                 });
 
@@ -39,7 +39,7 @@ angular.module('openlayers-directive').directive('olPolygon', ["$log", "$q", "ol
                         type: 'Polygon',
                         coords: coords,
                         projection: proj,
-                        style:  scope.style ? scope.style : mapDefaults.styles.path
+                        style: scope.style ? scope.style : mapDefaults.styles.path
                     };
                     var feature = createFeature(data, viewProjection);
                     layer.getSource().addFeature(feature);

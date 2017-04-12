@@ -22,18 +22,15 @@
             }
         }
 
-        $scope.toRadian = function( input)
-        {
+        $scope.toRadian = function (input) {
             return input * Math.PI / 180;
         }
 
-        $scope.getArea= function(coordinates)
-        {
+        $scope.getArea = function (coordinates) {
             var p1, p2;
             var area = 0;
-            if (coordinates.length > 2){
-                for (var i = 0; i < coordinates.length - 1; i++)
-                {
+            if (coordinates.length > 2) {
+                for (var i = 0; i < coordinates.length - 1; i++) {
                     p1 = coordinates[i];
                     p2 = coordinates[i + 1];
                     area += (p2.longitude - p1.longitude) * (2 + Math.Sin(toRadian(p1.latitude)) + Math.Sin(toRadian(p2.latitude)));
@@ -118,8 +115,8 @@
             /* send to db */
             $rootScope.showLoader();
             var dataToSave = [];
-            if($scope.polygonBuffer.length > 0){
-                
+            if ($scope.polygonBuffer.length > 0) {
+
                 angular.forEach($scope.polygonBuffer, function (value, key) {
                     GPSService.createMulti(value.coordinates).then(function (response) {
                         if (response.status == 200) {
@@ -130,7 +127,7 @@
                         $rootScope.hideLoader();
                     })
                 })
-                
+
 
             }
             else if ($scope.drawingBuffer.length > 0) {

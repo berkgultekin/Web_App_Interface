@@ -60,20 +60,20 @@ angular.module('openlayers-directive').directive('olDraw', ["$log", "$q", "olMap
                 featureOverlay.setMap(map);
 
 
-                draw.on('drawend',function(event, deneme){
+                draw.on('drawend', function (event, deneme) {
                     scope.onDrawEnd({data: event});
 
                 })
 
-                attrs.$observe('status', function(status) {
-                    if(status == true || status == 'true'){
-                        if(activeStatus == false){
+                attrs.$observe('status', function (status) {
+                    if (status == true || status == 'true') {
+                        if (activeStatus == false) {
                             map.addInteraction(modify);
                             map.addInteraction(draw);
                             activeStatus = true;
                         }
-                    }else{
-                        if(activeStatus == true){
+                    } else {
+                        if (activeStatus == true) {
                             map.removeInteraction(modify);
                             map.removeInteraction(draw);
                             activeStatus = false;

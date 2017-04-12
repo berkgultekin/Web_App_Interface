@@ -18,14 +18,14 @@ var app = angular
         $localStorageProvider.setKeyPrefix('icond-admin-');
     })
     .run(function ($rootScope, statesTree, $state, $http, $timeout, Store) {
-		/* Loader Controls */
+        /* Loader Controls */
         $rootScope.loader = 'hidden';
-        $rootScope.showLoader = function(){
+        $rootScope.showLoader = function () {
             $rootScope.loader = 'shown';
         }
 
-        $rootScope.hideLoader = function(){
-            $timeout(function(){
+        $rootScope.hideLoader = function () {
+            $timeout(function () {
                 $rootScope.loader = 'hidden';
             }, 250);
         }
@@ -60,11 +60,11 @@ var app = angular
         console.log($rootScope.sideMenuArray);
 
 
-        if(Store.isset('user')){
-            $rootScope.user =Store.get('user');
+        if (Store.isset('user')) {
+            $rootScope.user = Store.get('user');
             console.log($rootScope.user);
             $state.go('content.mission.list');
-        }else{
+        } else {
             $state.go('login');
         }
 
@@ -82,20 +82,20 @@ app.constant('API', {
 app.factory('HttpResponseInterceptor', function ($q, $sce, API, Store, $rootScope, $injector) {
 
     var helper = {
-        base64Encode: function(string){
+        base64Encode: function (string) {
             return btoa(string);
         }
     };
 
     var interceptor = {
         'request': function (config) {
-            if(Store.isset("token")){
+            if (Store.isset("token")) {
                 var email = "e194190@metu.edu.tr";
                 var pass = "12345678";
-                config.headers['Authorization'] = "Basic "+Store.get("token");
+                config.headers['Authorization'] = "Basic " + Store.get("token");
                 console.log("OF", Store.get("token"));
             }
-            config.headers['Content-Type'] =  'application/json';
+            config.headers['Content-Type'] = 'application/json';
             return config;
         },
         'response': function (response) {
@@ -124,25 +124,25 @@ app.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('HttpResponseInterceptor');
 }]);
 
-app.filter('reverse', function() {
-    return function(items) {
+app.filter('reverse', function () {
+    return function (items) {
         return items.slice().reverse();
     };
 });
 
 app.controller('ModalController', [
-    '$scope', '$element', 'title', 'detail','close',
-    function($scope, $element, title, detail  ,close) {
+    '$scope', '$element', 'title', 'detail', 'close',
+    function ($scope, $element, title, detail, close) {
         $scope.detail = detail;
         //  This close function doesn't need to use jQuery or bootstrap, because
         //  the button has the 'data-dismiss' attribute.
-        $scope.close = function() {
-            close({},500); // close, but give 500ms for bootstrap to animate
+        $scope.close = function () {
+            close({}, 500); // close, but give 500ms for bootstrap to animate
         };
 
         //  This cancel function must use the bootstrap, 'modal' function because
         //  the doesn't have the 'data-dismiss' attribute.
-        $scope.cancel = function() {
+        $scope.cancel = function () {
 
             //  Manually hide the modal.
             $element.modal('hide');

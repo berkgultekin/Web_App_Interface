@@ -1,13 +1,13 @@
 (function () {
-	'use strict';
+    'use strict';
 
-	angular.module('SearchRescueApp')
-		.config(stateConfig)
-		.controller('initController', initController)
+    angular.module('SearchRescueApp')
+        .config(stateConfig)
+        .controller('initController', initController)
         .controller('loginController', loginController)
         .controller('ContentController', ContentController);
 
-	function stateConfig($stateProvider) {
+    function stateConfig($stateProvider) {
         $stateProvider.state('content', {
             controller: 'ContentController',
             templateUrl: "views/content.html",
@@ -30,11 +30,11 @@
 
     }
 
-	function initController() {
-		var vm = this;
-	}
+    function initController() {
+        var vm = this;
+    }
 
-    function loginController($scope,$rootScope, toastr, PersonService, Store, $state) {
+    function loginController($scope, $rootScope, toastr, PersonService, Store, $state) {
         var vm = this;
         $rootScope.isLogin = "login";
         $scope.loginModel = {
@@ -42,23 +42,23 @@
             password: '12345678'
         }
 
-        $scope.login = function(){
+        $scope.login = function () {
 
-            if(!angular.isDefined($scope.loginModel)){
+            if (!angular.isDefined($scope.loginModel)) {
                 toastr.error('Please fill all fields.', 'Empty Fields!');
-            }else{
+            } else {
                 var token = btoa($scope.loginModel.email + ":" + $scope.loginModel.password);
                 $rootScope.showLoader();
-                PersonService.login(token).then(function(response){
+                PersonService.login(token).then(function (response) {
 
-                    if(response.status == 401){
-                        toastr.error( 'Invalid username or password', 'Invalid Credentials!');
+                    if (response.status == 401) {
+                        toastr.error('Invalid username or password', 'Invalid Credentials!');
                         $rootScope.hideLoader();
-                    }else{
-                        toastr.success( 'You signed in successfully and will be redirected in 2 seconds.', 'Successful!');
+                    } else {
+                        toastr.success('You signed in successfully and will be redirected in 2 seconds.', 'Successful!');
                         $rootScope.user = response.data;
-                        Store.update('user',response.data);
-                        Store.update('token',token);
+                        Store.update('user', response.data);
+                        Store.update('token', token);
                         $state.go('content.mission.list');
                     }
 
@@ -69,20 +69,19 @@
         }
 
 
-
     }
-    
-    function ContentController($scope, $state, Store,toastr ) {
-		var vm = this;
+
+    function ContentController($scope, $state, Store, toastr) {
+        var vm = this;
         var init = function ($scope) {
             initMenu();
         }
         init()
 
-        $scope.logout = function(){
+        $scope.logout = function () {
             Store.clear();
             $state.go('login');
-            toastr.info( 'You logged out successfully.', 'Logged out!');
+            toastr.info('You logged out successfully.', 'Logged out!');
 
         }
 

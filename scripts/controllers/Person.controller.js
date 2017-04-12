@@ -57,7 +57,7 @@
 
 
     function PersonController($scope, PersonService, $stateParams, $rootScope, toastr) {
-		/* init add page */
+        /* init add page */
         $scope.initList = function () {
             $scope.personList = [];
             $rootScope.showLoader();
@@ -67,9 +67,9 @@
                 $rootScope.hideLoader();
             });
         }
-		/* init update page */
+        /* init update page */
         $scope.initUpdate = function () {
-            $scope.newPerson ={};
+            $scope.newPerson = {};
             $rootScope.showLoader();
 
             PersonService.getPerson($stateParams.personId).then(function (response) {
@@ -80,27 +80,27 @@
             });
         }
 
-		/* add new person */
+        /* add new person */
         $scope.add = function () {
             $rootScope.showLoader();
             PersonService.addNewPerson($scope.newPerson).then(function (response) {
-                toastr.success( 'New person record created successfully..', 'Successfully added!');
+                toastr.success('New person record created successfully..', 'Successfully added!');
                 $rootScope.hideLoader();
             });
 
         }
 
-		/* update person */
+        /* update person */
         $scope.update = function () {
             var filtered = {
-                name : $scope.newPerson.name,
-                surname : $scope.newPerson.surname,
-                blood_group : $scope.newPerson.blood_group,
+                name: $scope.newPerson.name,
+                surname: $scope.newPerson.surname,
+                blood_group: $scope.newPerson.blood_group,
                 e_mail: $scope.newPerson.e_mail,
             };
 
             PersonService.updatePerson(filtered, $scope.newPerson.id).then(function (response) {
-                toastr.success( 'New person record created successfully..', 'Successfully added!');
+                toastr.success('New person record created successfully..', 'Successfully added!');
             });
 
         }

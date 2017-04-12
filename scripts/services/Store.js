@@ -1,26 +1,26 @@
 ﻿app.factory('Store', function () {
     var storage = {
-        'expireTimeInMinutes':  1,
-        'init': function(){
-            if(storage.isset("storageExpire")){
+        'expireTimeInMinutes': 1,
+        'init': function () {
+            if (storage.isset("storageExpire")) {
                 var storedDate = moment(storage.get('storageExpire'));
-                if(storedDate > moment().add(storage.expireTimeInMinutes,"expireTimeInMinutes")){
+                if (storedDate > moment().add(storage.expireTimeInMinutes, "expireTimeInMinutes")) {
                     /* no problem */
-                    storage.update("storageExpire", moment().add(storage.expireTimeInMinutes,"minutes"));
-                }else{
+                    storage.update("storageExpire", moment().add(storage.expireTimeInMinutes, "minutes"));
+                } else {
                     localStorage.clear();
-                    storage.update("storageExpire", moment().add(storage.expireTimeInMinutes,"minutes"));    
+                    storage.update("storageExpire", moment().add(storage.expireTimeInMinutes, "minutes"));
                 }
-            }else{
+            } else {
                 /* first init clear and continue */
                 localStorage.clear();
-                storage.update("storageExpire", moment().add(storage.expireTimeInMinutes,"minutes"));
+                storage.update("storageExpire", moment().add(storage.expireTimeInMinutes, "minutes"));
             }
         },
-        'live': function(){
-            storage.update("storageExpire", moment().add(storage.expireTimeInMinutes,"minutes"));
+        'live': function () {
+            storage.update("storageExpire", moment().add(storage.expireTimeInMinutes, "minutes"));
         },
-        'clear': function(){
+        'clear': function () {
             localStorage.clear();
         },
         'update': function (key, data) {
