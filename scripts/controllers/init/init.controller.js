@@ -13,7 +13,6 @@
             templateUrl: "views/content.html",
             controllerAs: 'vm',
             data: {}
-
         });
         $stateProvider.state('content.init', {
             templateUrl: 'views/init/init.html',
