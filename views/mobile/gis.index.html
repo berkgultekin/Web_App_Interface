@@ -1,3 +1,21 @@
-<openlayers ol-center="center" ol-defaults="defaults">
-    <ol-layer ol-layer-properties="map.layers.bing"></ol-layer>
-</openlayers>
+<style>
+    .full-map {
+        width: 100%;
+        height: 100%;
+        background-color: #b5d0d0;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-center">
+            <h3 class="text-center" ng-init="initMap()" style="color: #fff; text-align: center;">Mission Map</h3>
+        </div>
+        <openlayers ol-center="center" ol-defaults="defaults" style="width: 100%; height: 100%; position:fixed"
+            <ol-layer ol-layer-properties="map.layers.bing"></ol-layer>
+            <ol-marker ng-repeat="pos in activePositions" lat="pos.latitude" lon="pos.longitude" ol-style="pos.style"></ol-marker>
+             <ol-marker ng-repeat="marker in markers" lat="marker.lat" lon="marker.lon" ol-style="marker.style" ></ol-marker>
+            <ol-polygon ng-repeat="polygon in polygons" message="{{polygon.message}}" coords="{{polygon.coords}}" ol-style="polygon.style"></ol-polygon>
+        </openlayers>
+
+    </div>
+</div>
