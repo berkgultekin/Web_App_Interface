@@ -27,6 +27,7 @@
             controllerAs: 'vm',
             data: {}
         });
+
     }
 
 	function initController() {
