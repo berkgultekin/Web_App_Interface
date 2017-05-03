@@ -91,19 +91,28 @@
         }
 
         $scope.showEventDetail = function (ev) {
-            ModalService.showModal({
-                templateUrl: "views/modal/eventmodal.html",
-                controller: "ModalController",
-                inputs: {
-                    detail: ev,
-                    title: "Deneme",
+
+            if(ev.type == 'livestream'){
+                if(confirm("Do you want to activate live stream watch?")){
+                    alert(123);
                 }
-            }).then(function (modal) {
-                modal.element.modal();
-                modal.close.then(function (result) {
-                    $scope.yesNoResult = result ? "You said Yes" : "You said No";
+            }else{
+                ModalService.showModal({
+                    templateUrl: "views/modal/eventmodal.html",
+                    controller: "ModalController",
+                    inputs: {
+                        detail: ev,
+                        title: "Deneme",
+                    }
+                }).then(function (modal) {
+                    modal.element.modal();
+                    modal.close.then(function (result) {
+                        $scope.yesNoResult = result ? "You said Yes" : "You said No";
+                    });
                 });
-            });
+            }
+
+
         }
 
         $scope.initChase = function () {

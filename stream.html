@@ -51,7 +51,7 @@
 	// user need to connect server, so that others can reach him.
 	connection.connectSocket(function(socket) {
 		socket.on('logs', function(log) {
-			document.querySelector('h1').innerHTML = log.replace(/</g, '----').replace(/>/g, '___').replace(/----/g, '(<span style="color:red;">').replace(/___/g, '</span>)');
+//			document.querySelector('h1').innerHTML = log.replace(/</g, '----').replace(/>/g, '___').replace(/----/g, '(<span style="color:red;">').replace(/___/g, '</span>)');
 		});
 
 		// this event is emitted when a broadcast is already created.
@@ -307,10 +307,9 @@
 		html += '<br>';
 		html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
 
-		var roomURLsDiv = document.getElementById('room-urls');
-		roomURLsDiv.innerHTML = html;
-
-		roomURLsDiv.style.display = 'block';
+//		var roomURLsDiv = document.getElementById('room-urls');
+//		roomURLsDiv.innerHTML = html;
+//		roomURLsDiv.style.display = 'block';
 	}
 
 	(function() {
@@ -371,7 +370,7 @@
 	connection.onNumberOfBroadcastViewersUpdated = function(event) {
 		if (!connection.isInitiator) return;
 
-		document.getElementById('broadcast-viewers-counter').innerHTML = 'Number of broadcast viewers: <b>' + event.numberOfBroadcastViewers + '</b>';
+//		document.getElementById('broadcast-viewers-counter').innerHTML = 'Number of broadcast viewers: <b>' + event.numberOfBroadcastViewers + '</b>';
 	};
 </script>
 

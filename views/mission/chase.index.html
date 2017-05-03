@@ -109,8 +109,19 @@
                                         <div ng-if="feed.length > 0" style="max-height: 300px;overflow-y: scroll;">
                                             <ul class="list-group" style="text-align: left">
                                                 <li ng-repeat="f in feed | reverse" class="has-cursor list-group-item blinkOp" ng-click="showEventDetail(f)">
-                                                    <i class="fa fa-fw fa-warning"></i>
-                                                    You received <strong>media</strong> from mission area (By Tuğca Eker). <small>(<i class="fa fa-fw fa-clock-o"></i> {{f.unixtime * 1000  | date:'yyyy-MM-dd HH:mm:ss Z'}})</small>
+                                                    <p ng-if="f.type == 'photo' || f.type == 'image'">
+                                                        <i class="fa fa-fw fa-warning"></i>
+                                                        You received <strong>media (photo)</strong> from mission area (By Tuğca Eker). <small>(<i class="fa fa-fw fa-clock-o"></i> {{f.unixtime * 1000  | date:'yyyy-MM-dd HH:mm:ss Z'}})</small>
+                                                    </p>
+                                                    <p ng-if="f.type == 'video'">
+                                                        <i class="fa fa-fw fa-warning"></i>
+                                                        You received <strong>media (video)</strong> from mission area (By Tuğca Eker). <small>(<i class="fa fa-fw fa-clock-o"></i> {{f.unixtime * 1000  | date:'yyyy-MM-dd HH:mm:ss Z'}})</small>
+                                                    </p>
+                                                    <p ng-if="f.type == 'livestream'">
+                                                        <i class="fa fa-fw fa-warning"></i>
+                                                        You received <strong>media (livestream)</strong> from mission area (By Tuğca Eker). <small>(<i class="fa fa-fw fa-clock-o"></i> {{f.unixtime * 1000  | date:'yyyy-MM-dd HH:mm:ss Z'}})</small>
+                                                    </p>
+
                                                 </li>
                                             </ul>
                                         </div>
