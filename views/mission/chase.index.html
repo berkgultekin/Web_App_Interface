@@ -34,13 +34,18 @@
             </div>
             <div class="x_content">
 
-                <div class="row">
-                    <div class="col-md-3">1. kişinin videosu buraya gelecek</div>
-                    <div class="col-md-3">2. kişinin videosu buraya gelecek</div>
-                    <div class="col-md-3">3. kişinin videosu buraya gelecek</div>
-                    <div class="col-md-3">4. kişinin videosu buraya gelecek</div>
+                <div class="row" ng-if="streams.length == 0">
+                    <div class="col-md-12">
+                        <p>No stream found.</p>
+                    </div>
                 </div>
 
+                <div class="row" ng-if="streams.length > 0">
+
+                    <div class="col-md-3" ng-repeat="st in streams">
+                        <iframe ng-src="{{st.url}}"  frameborder="0" scrolling="no" onload="resizeIframe(this)"/></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -160,5 +165,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+        setTimeout(function(){
+            resizeIframe(obj)
+        },1000)
+    }
+</script>
 
 

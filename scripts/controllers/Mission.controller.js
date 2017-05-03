@@ -80,6 +80,9 @@
 
     function MissionController($scope, ModalService, MediaService, MissionService, PersonService, GPSService, $state, $stateParams, $rootScope, $interval) {
 
+        $scope.viewedLivestreamCount = 0;
+        $scope.streams = [];
+
         /* init list page */
         $scope.initList = function () {
             $rootScope.showLoader();
@@ -92,9 +95,15 @@
 
         $scope.showEventDetail = function (ev) {
 
+            console.log(ev);
             if(ev.type == 'livestream'){
                 if(confirm("Do you want to activate live stream watch?")){
-                    alert(123);
+
+                    /* start stream.html?id=tug2er455 */
+
+                    $scope.streams.push({
+                        url: 'http://sr.dev/app/stream.html?id=' + ev.data
+                    });
                 }
             }else{
                 ModalService.showModal({
@@ -178,7 +187,8 @@
                                             "path": "http://sr.dev/app/images/media/" + val.data,
                                             "type": val.type,
                                             "id": val.id,
-                                            "unixtime": val.unixtime
+                                            "unixtime": val.unixtime,
+                                            "data": val.data
                                         });
                                         $scope.existingMedia.push(val.id);
                                         hasNewEvent = true;

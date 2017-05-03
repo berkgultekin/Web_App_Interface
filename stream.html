@@ -6,22 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 </head>
 <body>
-
 <section class="make-center">
     <div class="make-center">
-        <input type="text" id="broadcast-id" value="room-xyz" autocorrect=off autocapitalize=off size=20>
-        <button id="open-or-join">Open or Join Broadcast</button>
-
-        <div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
-        <div class="make-center" id="broadcast-viewers-counter"></div>
-
+        <input type="hidden" id="broadcast-id" value="room-xyz" autocorrect=off autocapitalize=off size=20>
         <video id="video-preview" controls loop></video>
+    </div>
 </section>
 
 <script src="scripts/misc/RTCMultiConnection.min.js"></script>
 <script src="scripts/misc/socket.io.js"></script>
 <!-- <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script> -->
 <script>
+
+    /* got it from http://stackoverflow.com/questions/979975/how-to-get-the-value-from-the-get-parameters*/
+    var QueryString = function () {
+        var query_string = {};
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (typeof query_string[pair[0]] === "undefined") {
+                query_string[pair[0]] = decodeURIComponent(pair[1]);
+            } else if (typeof query_string[pair[0]] === "string") {
+                var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+                query_string[pair[0]] = arr;
+            } else {
+                query_string[pair[0]].push(decodeURIComponent(pair[1]));
+            }
+        }
+        return query_string;
+    }();
+
 	// recording is disabled because it is resulting for browser-crash
 	// if you enable below line, please also uncomment above "RecordRTC.js"
 	var enableRecordings = false;
@@ -110,12 +125,14 @@
 				showRoomURL(connection.sessionid);
 			});
 		});
+
+        setTimeout(function(){
+            document.getElementById('broadcast-id').value = QueryString.id;
+            autoConnect(QueryString.id);
+        },2500);
 	});
 
-	window.onbeforeunload = function() {
-		// Firefox is ugly.
-		document.getElementById('open-or-join').disabled = false;
-	};
+
 
 	var videoPreview = document.getElementById('video-preview');
 
@@ -187,43 +204,6 @@
 		}
 	};
 
-	// ask node.js server to look for a broadcast
-	// if broadcast is available, simply join it. i.e. "join-broadcaster" event should be emitted.
-	// if broadcast is absent, simply create it. i.e. "start-broadcasting" event should be fired.
-	document.getElementById('open-or-join').onclick = function() {
-		var broadcastId = document.getElementById('broadcast-id').value;
-		if (broadcastId.replace(/^\s+|\s+$/g, '').length <= 0) {
-			alert('Please enter broadcast-id');
-			document.getElementById('broadcast-id').focus();
-			return;
-		}
-
-		document.getElementById('open-or-join').disabled = true;
-
-		connection.session = {
-			audio: true,
-			video: true,
-			oneway: true
-		};
-
-		var socket = connection.getSocket();
-
-		socket.emit('check-broadcast-presence', broadcastId, function(isBroadcastExists) {
-			if (!isBroadcastExists) {
-				// the first person (i.e. real-broadcaster) MUST set his user-id
-				connection.userid = broadcastId;
-			}
-
-			console.log('check-broadcast-presence', broadcastId, isBroadcastExists);
-
-			socket.emit('join-broadcast', {
-				broadcastId: broadcastId,
-				userid: connection.userid,
-				typeOfStreams: connection.session
-			});
-		});
-	};
-
 	connection.onstreamended = function() {};
 
 	connection.onleave = function(event) {
@@ -288,10 +268,6 @@
 		}, 30 * 1000); // 30-seconds
 	};
 
-	function disableInputButtons() {
-		document.getElementById('open-or-join').disabled = true;
-		document.getElementById('broadcast-id').disabled = true;
-	}
 
 	// ......................................................
 	// ......................Handling broadcast-id................
@@ -354,7 +330,6 @@
 		(function reCheckRoomPresence() {
 			connection.checkPresence(broadcastId, function(isRoomExists) {
 				if (isRoomExists) {
-					document.getElementById('open-or-join').onclick();
 					return;
 				}
 
@@ -372,6 +347,32 @@
 
 //		document.getElementById('broadcast-viewers-counter').innerHTML = 'Number of broadcast viewers: <b>' + event.numberOfBroadcastViewers + '</b>';
 	};
+
+
+	/* auto join */
+
+	function autoConnect(room_id){
+
+        connection.session = {
+            audio: true,
+            video: true,
+            oneway: true
+        };
+
+        var socket = connection.getSocket();
+
+        socket.emit('check-broadcast-presence', room_id, function(isBroadcastExists) {
+            if (isBroadcastExists) {
+                socket.emit('join-broadcast', {
+                    broadcastId: room_id,
+                    userid: connection.userid,
+                    typeOfStreams: connection.session
+                });
+            }
+        });
+    }
+
+
 </script>
 
 <script src="https://cdn.webrtc-experiment.com/common.js"></script>
